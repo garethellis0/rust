@@ -1191,6 +1191,8 @@ define_print! {
                         }
                         if !is_sized {
                             write!(f, "{}?Sized", if first { " " } else { "+" })?;
+                        } else if first {
+                            write!(f, " Sized")?;
                         }
                         Ok(())
                     })
