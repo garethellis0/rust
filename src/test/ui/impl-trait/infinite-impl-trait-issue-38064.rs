@@ -13,17 +13,15 @@
 //
 // Regression test for #38064.
 
-// error-pattern:overflow evaluating the requirement `impl Quux`
-
 trait Quux {}
 
-fn foo() -> impl Quux {
+fn foo() -> impl Quux { //~ recursive opaque type
     struct Foo<T>(T);
     impl<T> Quux for Foo<T> {}
     Foo(bar())
 }
 
-fn bar() -> impl Quux {
+fn bar() -> impl Quux { //~ recursive opaque type
     struct Bar<T>(T);
     impl<T> Quux for Bar<T> {}
     Bar(foo())
