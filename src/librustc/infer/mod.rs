@@ -1095,9 +1095,6 @@ impl<'a, 'gcx, 'tcx> InferCtxt<'a, 'gcx, 'tcx> {
         outlives_env: &OutlivesEnvironment<'tcx>,
         suppress: SuppressRegionErrors,
     ) {
-        debug!("resolve_regions_and_report_errors HEY THERE");
-        debug!("region_context: {:?}", region_context);
-        debug!("region_map: {:?}", region_map);
         assert!(
             self.is_tainted_by_errors() || self.region_obligations.borrow().is_empty(),
             "region_obligations not empty: {:#?}",

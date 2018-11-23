@@ -47,7 +47,6 @@ pub fn resolve<'tcx>(
     Vec<RegionResolutionError<'tcx>>,
 ) {
     debug!("RegionConstraintData: resolve_regions()");
-    debug!("RegionConstraintData: MINEMINEMINE");
     let mut errors = vec![];
     let mut resolver = LexicalResolver {
         region_rels,
@@ -55,10 +54,6 @@ pub fn resolve<'tcx>(
         data,
     };
     let values = resolver.infer_variable_values(&mut errors);
-
-    debug!("------MyDebugBegin------");
-    debug!("FoundLexicalRegions: {:?}", values.values);
-    debug!("-------MyDebugEnd-------");
     (values, errors)
 }
 
@@ -124,8 +119,6 @@ impl<'cx, 'gcx, 'tcx> LexicalResolver<'cx, 'gcx, 'tcx> {
         &mut self,
         errors: &mut Vec<RegionResolutionError<'tcx>>,
     ) -> LexicalRegionResolutions<'tcx> {
-        debug!("ENTERING infer_variable_values()");
-
         let mut var_data = self.construct_var_data(self.tcx());
 
         // Dorky hack to cause `dump_constraints` to only get called
@@ -142,8 +135,6 @@ impl<'cx, 'gcx, 'tcx> LexicalResolver<'cx, 'gcx, 'tcx> {
         self.expansion(&mut var_data);
         self.collect_errors(&mut var_data, errors);
         self.collect_var_errors(&var_data, &graph, errors);
-
-        debug!("EXITING infer_variable_values()");
         var_data
     }
 
@@ -203,9 +194,8 @@ impl<'cx, 'gcx, 'tcx> LexicalResolver<'cx, 'gcx, 'tcx> {
     }
 
     fn expansion(&self, var_values: &mut LexicalRegionResolutions<'tcx>) {
-        let return_me = self.iterate_until_fixed_point("Expansion",
-                                       |constraint, origin| {
-            debug!("ENTERING expansion: constraint={:?} origin={:?}", constraint, origin);
+        self.iterate_until_fixed_point("Expansion", |constraint, origin| {
+            debug!("expansion: constraint={:?} origin={:?}", constraint, origin);
             match *constraint {
                 Constraint::RegSubVar(a_region, b_vid) => {
                     let b_data = var_values.value_mut(b_vid);
@@ -717,21 +707,6 @@ impl<'cx, 'gcx, 'tcx> LexicalResolver<'cx, 'gcx, 'tcx> {
     where
         F: FnMut(&Constraint<'tcx>, &SubregionOrigin<'tcx>) -> bool,
     {
-        debug!("ENTERING iterate_until_fixed_point");
-        for (constraint, _origin) in &self.data.constraints {
-            // &Constraint, &SubregionOrigin
-            match *constraint {
-                Constraint::RegSubVar(a_region, b_vid) => {
-                    debug!("RegSubVar: (({:?}) ({:?}))", a_region, b_vid);
-                }
-                Constraint::VarSubVar(a_vid, b_vid) => {
-                    debug!("VarSubVar: (({:?}) ({:?}))", a_vid, b_vid);
-                },
-                Constraint::RegSubReg(..) | Constraint::VarSubReg(..) => {
-                }
-            }
-        }
-        debug!("Starting Iteration");
         let mut iteration = 0;
         let mut changed = true;
         while changed {
@@ -747,20 +722,6 @@ impl<'cx, 'gcx, 'tcx> LexicalResolver<'cx, 'gcx, 'tcx> {
             }
         }
         debug!("---- {} Complete after {} iteration(s)", tag, iteration);
-        for (constraint, _origin) in &self.data.constraints {
-            // &Constraint, &SubregionOrigin
-            match *constraint {
-                Constraint::RegSubVar(a_region, b_vid) => {
-                    debug!("RegSubVar: (({:?}) ({:?}))", a_region, b_vid);
-                }
-                Constraint::VarSubVar(a_vid, b_vid) => {
-                    debug!("VarSubVar: (({:?}) ({:?}))", a_vid, b_vid);
-                },
-                Constraint::RegSubReg(..) | Constraint::VarSubReg(..) => {
-                }
-            }
-        }
-        debug!("EXITING iterate_until_fixed_point");
     }
 
     fn bound_is_met(
@@ -802,7 +763,6 @@ impl<'tcx> LexicalRegionResolutions<'tcx> {
     where
         T: TypeFoldable<'tcx>,
     {
-        debug!("normalize()");
         tcx.fold_regions(&value, &mut false, |r, _db| match r {
             ty::ReVar(rid) => self.resolve_var(*rid),
             _ => r,

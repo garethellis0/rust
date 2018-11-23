@@ -181,7 +181,6 @@ impl<'a, 'gcx, 'tcx> TypeFolder<'gcx, 'tcx> for FullTypeResolver<'a, 'gcx, 'tcx>
     }
 
     fn fold_region(&mut self, r: ty::Region<'tcx>) -> ty::Region<'tcx> {
-        debug!("resolve.rs - fold_region");
         match *r {
             ty::ReVar(rid) => self.infcx.lexical_region_resolutions
                                         .borrow()

@@ -108,7 +108,6 @@ pub struct Scope {
 
 impl fmt::Debug for Scope {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(fmt, "id({:?}) ", self.id);
         match self.data {
             ScopeData::Node => write!(fmt, "Node({:?})", self.id),
             ScopeData::CallSite => write!(fmt, "CallSite({:?})", self.id),
@@ -549,8 +548,6 @@ impl<'tcx> ScopeTree {
         return None;
     }
 
-
-    // NOTE: THIS IS WHAT WE WANT
     pub fn var_region(&self, id: hir::ItemLocalId) -> ty::RegionKind {
         //! Returns the lifetime of the variable `id`.
 
