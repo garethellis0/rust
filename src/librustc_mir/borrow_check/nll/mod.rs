@@ -94,6 +94,9 @@ pub(in borrow_check) fn compute_regions<'cx, 'gcx, 'tcx>(
     Option<Rc<Output<RegionVid, BorrowIndex, LocationIndex>>>,
     Option<ClosureRegionRequirements<'gcx>>,
 ) {
+    debug!("COMPUTING REGIONS");
+    info!("COMPUTING REGIONS");
+
     let mut all_facts = if AllFacts::enabled(infcx.tcx) {
         Some(AllFacts::default())
     } else {
