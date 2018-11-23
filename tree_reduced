@@ -1,0 +1,18 @@
+// (Eliding non-relevent detail in ellipses: “...”)
+fn main() ({
+       let i ...  = (3 /* node_id: 15 hir local_id: 3 */); 
+       ({
+            let borrow1 /* pat node_id: 18 hir local_id: 6 */ =
+            ...
+            ({
+                 ((::io::_print ... ))
+             } ...);
+        } /* ... local_id: 109 */)
+       ({
+            let borrow2 /* pat node_id: 25 hir local_id: 113 */ =
+            ...
+            ({
+                 ((::io::_print ... ))
+             } ...);
+        } /* ... local_id: 216 */)
+} ... )

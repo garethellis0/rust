@@ -1,0 +1,296 @@
+#[prelude_import]
+use ::std::prelude::v1::*; /* node_id: 2 hir local_id: 0 */
+#[macro_use]
+extern crate std; /* node_id: 8 hir local_id: 0 */
+//fn process_or_default() {
+//
+//    // Type inference lets us omit an explicit type signature (which
+//    // would be `HashMap<String, String>` in this example).
+//    let mut map = HashMap::new();
+//
+//    // Review some books.
+//    map.insert(
+//        "Adventures of Huckleberry Finn".to_string(),
+//        "My favorite book.".to_string(),
+//    );
+//
+//    let key = "Adventures of Huckleberry Finn";
+//    match map.get_mut(&key) { // -------------+ 'lifetime
+//        Some(value) => process(value),     // |
+//        None => {                          // |
+//            map.insert(key, V::default()); // |
+//            //  ^~~~~~ ERROR.              // |
+//        }                                  // |
+//    } // <------------------------------------+
+//}
+
+//fn bar() {
+//    let mut data = vec!['a', 'b', 'c'];
+//    let slice = &mut data[..]; // <-+ 'lifetime
+//    //capitalize(slice);         //   |
+//    //data.push('d'); // ERROR!  //   |
+//    //data.push('e'); // ERROR!  //   |
+//    //data.push('f'); // ERROR!  //   |
+//} // <------------------------------+
+//
+//fn main() {
+//    {
+//        let x = 5;            // -----+-- 'b
+//                              //      |
+//        let r = &x;           // --+--+-- 'a
+//                              //   |  |
+//        let z = r*r;                      //   z
+//        //println!("r: {}", r); //   |  |
+//    }                         // -----+
+//    bar();
+//}
+
+//// `print_refs` takes two references to `i32` which have different
+//// lifetimes `'a` and `'b`. These two lifetimes must both be at
+//// least as long as the function `print_refs`.
+//fn print_refs<'a, 'b>(x: &'a i32, y: &'b i32) {
+//    println!("x is {} and y is {}", x, y);
+//}
+//
+//fn main() {
+//    let mut four = 4;
+//    let mut nine = 9;
+//    
+//    // Borrows (`&`) of both variables are passed into the function.
+//    print_refs(&four, &nine);
+//    // Any input which is borrowed must outlive the borrower. 
+//    // In other words, the lifetime of `four` and `nine` must 
+//    // be longer than that of `print_refs`.
+//    
+//    four = 5;
+//    println!("{}",four);
+//
+//}
+
+fn main() ({
+               let i /* pat node_id: 14 hir local_id: 2 */ =
+                   (3 /* node_id: 15 hir local_id: 3
+                       */); // Lifetime for `i` starts. ────────────────┐
+                            //                                                     │
+
+               ({ //                                                   │
+                    let borrow1 /* pat node_id: 18 hir local_id: 6 */ =
+                        (&(i /* node_id: 20 hir local_id: 8 */) /*
+                            node_id: 21 hir local_id: 9
+                            */); // `borrow1` lifetime starts. ──┐│
+                                 //                                                ││
+                                  //              ││
+                    // `borrow1 ends. ──────────────────────────────────┘│
+                    //                                                     │
+                    //                                                     │
+                     //                                                   │
+                    // `borrow2` lifetime starts. ──┐│
+                    //                                                ││
+                     //              ││
+                    // `borrow2` ends. ─────────────────────────────────┘│
+                    //                                                     │
+                    // Lifetime ends. ─────────────────────────────────────┘
+
+                    ({
+                         ((::io::_print /* node_id: 34 hir local_id: 14
+                              */)(((<::fmt::Arguments>::new_v1_formatted /*
+                                       node_id: 41 hir local_id: 21
+                                       */)((&([("borrow1: " /*
+                                                   node_id: 42 hir local_id: 22
+                                                   */),
+                                               ("\n" /*
+                                                   node_id: 43 hir local_id: 23
+                                                   */)] /*
+                                                 node_id: 44 hir local_id: 24
+                                                 */) /*
+                                               node_id: 45 hir local_id: 25
+                                               */),
+                                           (&(match (((&(borrow1 /*
+                                                            node_id: 47 hir local_id: 27
+                                                            */) /*
+                                                          node_id: 48 hir local_id: 28
+                                                          */),) /*
+                                                        node_id: 49 hir local_id: 29
+                                                        */) {
+                                                  (arg0 /*
+                                                   pat node_id: 51 hir local_id: 30
+                                                   */,) /*
+                                                  pat node_id: 50 hir local_id: 31
+                                                  */ =>
+                                                  ([((<::fmt::ArgumentV1>::new
+                                                         /*
+                                                         node_id: 56 hir local_id: 38
+                                                         */)((arg0 /*
+                                                                 node_id: 58 hir local_id: 40
+                                                                 */),
+                                                             (::fmt::Display::fmt
+                                                                 /*
+                                                                 node_id: 63 hir local_id: 45
+                                                                 */)) /*
+                                                        node_id: 64 hir local_id: 46
+                                                        */)] /*
+                                                      node_id: 65 hir local_id: 47
+                                                      */),
+                                              } /*
+                                                 node_id: 66 hir local_id: 48
+                                                 */) /*
+                                               node_id: 67 hir local_id: 49
+                                               */),
+                                           (&([(::fmt::rt::v1::Argument{position:
+                                                                            ((::fmt::rt::v1::Position::At
+                                                                                 /*
+                                                                                 node_id: 79 hir local_id: 62
+                                                                                 */)((0usize
+                                                                                         /*
+                                                                                         node_id: 80 hir local_id: 63
+                                                                                         */))
+                                                                                /*
+                                                                                node_id: 81 hir local_id: 64
+                                                                                */),
+                                                                        format:
+                                                                            (::fmt::rt::v1::FormatSpec{fill:
+                                                                                                           (' '
+                                                                                                               /*
+                                                                                                               node_id: 87 hir local_id: 72
+                                                                                                               */),
+                                                                                                       align:
+                                                                                                           (::fmt::rt::v1::Alignment::Unknown
+                                                                                                               /*
+                                                                                                               node_id: 94 hir local_id: 80
+                                                                                                               */),
+                                                                                                       flags:
+                                                                                                           (0u32
+                                                                                                               /*
+                                                                                                               node_id: 95 hir local_id: 82
+                                                                                                               */),
+                                                                                                       precision:
+                                                                                                           (::fmt::rt::v1::Count::Implied
+                                                                                                               /*
+                                                                                                               node_id: 102 hir local_id: 90
+                                                                                                               */),
+                                                                                                       width:
+                                                                                                           (::fmt::rt::v1::Count::Implied
+                                                                                                               /*
+                                                                                                               node_id: 109 hir local_id: 98
+                                                                                                               */),}
+                                                                                /*
+                                                                                node_id: 110 hir local_id: 99
+                                                                                */),}
+                                                   /*
+                                                   node_id: 111 hir local_id: 100
+                                                   */)] /*
+                                                 node_id: 112 hir local_id: 101
+                                                 */) /*
+                                               node_id: 113 hir local_id: 102
+                                               */)) /*
+                                      node_id: 114 hir local_id: 103 */)) /*
+                             node_id: 35 hir local_id: 104 */);
+                     } /* block node_id: 30 hir local_id: 106 */ /*
+                        node_id: 36 hir local_id: 107 */);
+                } /* block node_id: 16 hir local_id: 109 */ /*
+                   node_id: 22 hir local_id: 110 */)
+               ({
+                    let borrow2 /* pat node_id: 25 hir local_id: 113 */ =
+                        (&(i /* node_id: 27 hir local_id: 115 */) /*
+                            node_id: 28 hir local_id: 116 */);
+                    ({
+                         ((::io::_print /* node_id: 119 hir local_id: 121
+                              */)(((<::fmt::Arguments>::new_v1_formatted /*
+                                       node_id: 126 hir local_id: 128
+                                       */)((&([("borrow2: " /*
+                                                   node_id: 127 hir local_id: 129
+                                                   */),
+                                               ("\n" /*
+                                                   node_id: 128 hir local_id: 130
+                                                   */)] /*
+                                                 node_id: 129 hir local_id: 131
+                                                 */) /*
+                                               node_id: 130 hir local_id: 132
+                                               */),
+                                           (&(match (((&(borrow2 /*
+                                                            node_id: 132 hir local_id: 134
+                                                            */) /*
+                                                          node_id: 133 hir local_id: 135
+                                                          */),) /*
+                                                        node_id: 134 hir local_id: 136
+                                                        */) {
+                                                  (arg0 /*
+                                                   pat node_id: 136 hir local_id: 137
+                                                   */,) /*
+                                                  pat node_id: 135 hir local_id: 138
+                                                  */ =>
+                                                  ([((<::fmt::ArgumentV1>::new
+                                                         /*
+                                                         node_id: 141 hir local_id: 145
+                                                         */)((arg0 /*
+                                                                 node_id: 143 hir local_id: 147
+                                                                 */),
+                                                             (::fmt::Display::fmt
+                                                                 /*
+                                                                 node_id: 148 hir local_id: 152
+                                                                 */)) /*
+                                                        node_id: 149 hir local_id: 153
+                                                        */)] /*
+                                                      node_id: 150 hir local_id: 154
+                                                      */),
+                                              } /*
+                                                 node_id: 151 hir local_id: 155
+                                                 */) /*
+                                               node_id: 152 hir local_id: 156
+                                               */),
+                                           (&([(::fmt::rt::v1::Argument{position:
+                                                                            ((::fmt::rt::v1::Position::At
+                                                                                 /*
+                                                                                 node_id: 164 hir local_id: 169
+                                                                                 */)((0usize
+                                                                                         /*
+                                                                                         node_id: 165 hir local_id: 170
+                                                                                         */))
+                                                                                /*
+                                                                                node_id: 166 hir local_id: 171
+                                                                                */),
+                                                                        format:
+                                                                            (::fmt::rt::v1::FormatSpec{fill:
+                                                                                                           (' '
+                                                                                                               /*
+                                                                                                               node_id: 172 hir local_id: 179
+                                                                                                               */),
+                                                                                                       align:
+                                                                                                           (::fmt::rt::v1::Alignment::Unknown
+                                                                                                               /*
+                                                                                                               node_id: 179 hir local_id: 187
+                                                                                                               */),
+                                                                                                       flags:
+                                                                                                           (0u32
+                                                                                                               /*
+                                                                                                               node_id: 180 hir local_id: 189
+                                                                                                               */),
+                                                                                                       precision:
+                                                                                                           (::fmt::rt::v1::Count::Implied
+                                                                                                               /*
+                                                                                                               node_id: 187 hir local_id: 197
+                                                                                                               */),
+                                                                                                       width:
+                                                                                                           (::fmt::rt::v1::Count::Implied
+                                                                                                               /*
+                                                                                                               node_id: 194 hir local_id: 205
+                                                                                                               */),}
+                                                                                /*
+                                                                                node_id: 195 hir local_id: 206
+                                                                                */),}
+                                                   /*
+                                                   node_id: 196 hir local_id: 207
+                                                   */)] /*
+                                                 node_id: 197 hir local_id: 208
+                                                 */) /*
+                                               node_id: 198 hir local_id: 209
+                                               */)) /*
+                                      node_id: 199 hir local_id: 210 */)) /*
+                             node_id: 120 hir local_id: 211 */);
+                     } /* block node_id: 115 hir local_id: 213 */ /*
+                        node_id: 121 hir local_id: 214 */);
+                } /* block node_id: 23 hir local_id: 216 */ /*
+                   node_id: 29 hir local_id: 217 */)
+           } /* block node_id: 12 hir local_id: 218 */ /*
+              node_id: 231 hir local_id: 219 */) /*
+node_id: 10 hir local_id: 0 */
